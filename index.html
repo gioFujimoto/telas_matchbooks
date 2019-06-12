@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <title>MatchBooks - Cadastro</title>
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css">
+  <!-- Bootstrap core CSS -->
+  <link href="css/bootstrap.min.css" rel="stylesheet">
+  <!-- Material Design Bootstrap -->
+  <link href="css/mdb.min.css" rel="stylesheet">
+  <!-- Your custom styles (optional) -->
+  <link href="css/style.css" rel="stylesheet">
+</head>
+
+<body>
+  <nav class="navbar navbar-expand-lg navbar-dark info-color">
+    <a class="navbar-brand" href="#">MatchBooks</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+      aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav">
+        <li class="nav-item active">
+          <a class="nav-link" href="login.html">Entrar<span class="sr-only">(current)</span></a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="index.html">Cadastro</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="localizacao.html">Localização</a>
+        </li>
+      </ul>
+    </div>
+  </nav>
+
+  <div style="height: 100vh">
+    <div class="flex-center flex-column">
+      <!-- Default form register -->
+      <form class="text-center border border-light p-5" method="post" action="#">
+
+        <p class="h4 mb-4">Cadastre-se!</p>
+
+        <!-- Nome -->
+        <input type="text" id="nome" class="form-control mb-4" placeholder="Nome" pattern=".{3,}" required
+          title="Mínimo de 3 caracteres" required>
+
+        <!-- Nascimento  -->
+        <input type="date" id="dataNasc" class="form-control mb-4" placeholder="Data de Nascimento" required>
+
+        <!-- E-mail -->
+        <input type="email" id="email" class="form-control mb-4" placeholder="E-mail" required>
+
+        <div class="form-row mb-4">
+          <div class="col">
+            <!-- Senha -->
+            <input type="password" id="senha" class="form-control" placeholder="Senha" required>
+          </div>
+          <div class="col">
+            <!-- Confirmar senha -->
+            <input type="password" id="confirmaSenha" class="form-control" placeholder="Confirmar senha" required>
+          </div>
+        </div>
+
+        <!-- Sign up button -->
+        <button class="btn btn-info my-4 btn-block" type="submit" onclick="validadata()">Cadastrar</button>
+        <hr>
+      </form>
+    </div>
+  </div>
+
+  <!-- SCRIPTS -->
+  <script>
+    var password = document.getElementById("senha");
+    var confirm_password = document.getElementById("confirmaSenha");
+    var valida_email = document.getElementById("email");
+
+    function validatePassword() {
+      if (password.value != confirm_password.value) {
+        confirm_password.setCustomValidity("Insira senhas idênticas");
+      } else {
+        confirm_password.setCustomValidity('');
+      }
+    }
+
+    password.onchange = validatePassword;
+    confirm_password.onkeyup = validatePassword;
+
+    
+    function validadata() {
+      var data = document.getElementById("dataNasc").value; // pega o valor do input
+      data = data.replace(/\//g, "-"); // substitui eventuais barras (ex. IE) "/" por hífen "-"
+      var data_array = data.split("-"); // quebra a data em array
+
+      // para o IE onde será inserido no formato dd/MM/yyyy
+      if (data_array[0].length != 4) {
+        data = data_array[2] + "-" + data_array[1] + "-" + data_array[0]; // remonto a data no formato yyyy/MM/dd
+      }
+
+      // comparo as datas e calculo a idade
+      var hoje = new Date();
+      var nasc = new Date(data);
+      var idade = hoje.getFullYear() - nasc.getFullYear();
+      var m = hoje.getMonth() - nasc.getMonth();
+      if (m < 0 || (m === 0 && hoje.getDate() < nasc.getDate())) idade--;
+
+      if (idade < 16) {
+        alert("Pessoas menores de 16 anos não podem se cadastrar.");
+        return false;
+      }
+      else 
+        return true;
+    }
+
+  </script>
+
+
+  <!-- JQuery -->
+  <script type="text/javascript" src="js/jquery-3.4.0.min.js"></script>
+  <!-- Bootstrap tooltips -->
+  <script type="text/javascript" src="js/popper.min.js"></script>
+  <!-- Bootstrap core JavaScript -->
+  <script type="text/javascript" src="js/bootstrap.min.js"></script>
+  <!-- MDB core JavaScript -->
+  <script type="text/javascript" src="js/mdb.min.js"></script>
+</body>
+
+</html>
